@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConvertQuickly</title>
+  <link rel="icon" href="https://via.placeholder.com/32" type="image/png">
+  <style>
+    :root {
+      --primary: #4a90e2;
+      --background: #fefefe;
+      --card-bg: #ffffff;
+      --text: #333;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --background: #121212;
+      --card-bg: #1e1e1e;
+      --text: #f5f5f5;
+      --shadow: rgba(255, 255, 255, 0.05);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .logo {
+      height: 40px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
+    .dark-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .tool {
+      background: var(--card-bg);
+      padding: 1.25rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow);
+    }
+
+    .tool h2 {
+      margin-top: 0;
+    }
+
+    input, button, textarea, select {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #357ab8;
+    }
+
+    footer {
+      background: #f2f2f2;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌓</button>
+    <img src="https://via.placeholder.com/40x40?text=Q" alt="Logo" class="logo">
+    <h1>ConvertQuickly</h1>
+    <p>Minimal & Fast Everyday Tools</p>
+  </header>
+  <main>
+    <section class="tool">
+      <h2>Word Counter</h2>
+      <textarea id="wordText" rows="5" placeholder="Type or paste text..."></textarea>
+      <button onclick="countWords()">Count Words</button>
+      <p id="wordResult"></p>
+    </section>
+
+    <section class="tool">
+      <h2>Temperature Converter</h2>
+      <input type="number" id="tempInput" placeholder="Enter temperature">
+      <select id="tempUnit">
+        <option value="C">Celsius</option>
+        <option value="F">Fahrenheit</option>
+      </select>
+      <button onclick="convertTemperature()">Convert</button>
+      <p id="tempResult"></p>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 ConvertQuickly
+  </footer>
+  <script>
+    function countWords() {
+      const text = document.getElementById("wordText").value;
+      const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+      document.getElementById("wordResult").textContent = `Words: ${wordCount}`;
+    }
+
+    function convertTemperature() {
+      const input = parseFloat(document.getElementById("tempInput").value);
+      const unit = document.getElementById("tempUnit").value;
+      let result;
+      if (isNaN(input)) {
+        result = "Please enter a valid number.";
+      } else if (unit === "C") {
+        result = `${input}°C = ${(input * 9/5 + 32).toFixed(2)}°F`;
+      } else {
+        result = `${input}°F = ${((input - 32) * 5/9).toFixed(2)}°C`;
+      }
+      document.getElementById("tempResult").textContent = result;
+    }
+
+    function toggleDarkMode() {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      if (currentTheme === "dark") {
+        document.documentElement.removeAttribute("data-theme");
+      } else {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    }
+  </script>
+</body>
+</html>
